@@ -1,7 +1,7 @@
 TARGET=s21_matrix.a
 CC=gcc
 DFLAGS=-o 0 -g3
-CFLAGS=-Wall -Wextra -std=c11 -g # -Werror
+CFLAGS=-Wall -Wextra -std=c11 -g -fopenmp -Ofast # -Werror
 OS=$(shell uname)
 TEST_TARGET=test
 EXECUTABLE=s21_matrix

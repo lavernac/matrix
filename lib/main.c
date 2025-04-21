@@ -4,13 +4,16 @@
 
 int main() {
   matrix_t m, check;
-  s21_create_matrix(2, 1, &m);
-  s21_create_matrix(1, 1, &check);
+  s21_create_matrix(20000, 20000, &m);
+  s21_create_matrix(20000, 20000, &check);
   // check.columns = 1;
   // check.rows = 1;
   // check.matrix = 0;
   // ck_assert_int_eq(
+  double t = wtime();
   s21_sum_matrix(&m, &m, &check);
+  t = wtime() - t;
+  printf("Elapsed time: %lf\n", t);
   // , OK);
   // print_matrix(&m);
   // print_matrix(&check);

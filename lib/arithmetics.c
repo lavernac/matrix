@@ -1,9 +1,10 @@
 #include "../include/arithmetics.h"
+#include "../include/helpers.h"
 
 #include <math.h>
 #include <stdio.h>
+#include <omp.h>
 
-#include "../include/helpers.h"
 
 int s21_sum_matrix(matrix_t *a, matrix_t *b, matrix_t *result) {
   int ret_status = check_matrix_arthmetics(a, b, result, 0);
@@ -12,6 +13,7 @@ int s21_sum_matrix(matrix_t *a, matrix_t *b, matrix_t *result) {
   ret_status = s21_create_matrix(a->rows, a->columns, result);
 
   if (!ret_status)
+  #pragma omp parallel for num_threads(omp_get_num_threads() - 1)
     for (int i = 0; i < a->rows; i++)
       for (int j = 0; j < a->columns; j++)
         result->matrix[i][j] = a->matrix[i][j] + b->matrix[i][j];
@@ -26,6 +28,7 @@ int s21_sub_matrix(matrix_t *a, matrix_t *b, matrix_t *result) {
   ret_status = s21_create_matrix(a->rows, a->columns, result);
 
   if (!ret_status)
+  #pragma omp parallel for num_threads(omp_get_num_threads() - 1)
     for (int i = 0; i < a->rows; i++)
       for (int j = 0; j < a->columns; j++)
         result->matrix[i][j] = a->matrix[i][j] - b->matrix[i][j];
@@ -41,7 +44,8 @@ int s21_mult_number(matrix_t *a, double number, matrix_t *result) {
   ret_status = s21_create_matrix(a->rows, a->columns, result);
 
   if (!ret_status)
-    for (int i = 0; i < a->rows; i++)
+  #pragma omp parallel for num_threads(omp_get_num_threads() - 1)
+  for (int i = 0; i < a->rows; i++)
       for (int j = 0; j < a->columns; j++) {
         if (isfinite(a->matrix[i][j]))
           result->matrix[i][j] = a->matrix[i][j] * number;
@@ -67,6 +71,7 @@ int s21_mult_matrix(matrix_t *a, matrix_t *b, matrix_t *result) {
   ret_status = s21_create_matrix(a->rows, b->columns, result);
 
   if (!ret_status)
+  #pragma omp parallel for num_threads(omp_get_num_threads() - 1)
     for (int i = 0; i < a->rows; i++)
       for (int j = 0; j < b->columns; j++)
         result->matrix[i][j] = calculate_cell_for_mul(a, b, i, j);

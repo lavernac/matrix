@@ -10,3 +10,4 @@ void print_matrix(matrix_t *a);
 int check_matrix(matrix_t *m);
 void copy_matrix(matrix_t *a, matrix_t *b);
 void get_minor(matrix_t *a, int row, int col, matrix_t *minor);
+double wtime();

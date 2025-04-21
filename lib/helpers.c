@@ -2,6 +2,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <time.h>
 
 // void print_matrix(matrix_t *a) {
 //   for (int i = 0; i < a->rows; i++) {
@@ -70,4 +71,10 @@ void get_minor(matrix_t *a, int row, int col, matrix_t *minor) {
       }
     }
   }
+}
+
+double wtime() {
+  struct timespec ts;
+  clock_gettime(CLOCK_MONOTONIC, &ts);
+  return ts.tv_sec + ts.tv_nsec * 1E-9;
 }
